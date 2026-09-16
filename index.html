@@ -4,754 +4,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="style.css">
     <title>我的荒野花園</title>
-
-    <style>
-        /* ========================================
-           基本設定
-        ======================================== */
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --forest: #536342;
-            --forest-dark: #3f4d32;
-            --sage: #7b8b63;
-            --sage-light: #a9b594;
-
-            --cream: #f7f3e8;
-            --beige: #e8e3d3;
-            --sand: #d9d2bf;
-
-            --brown: #a87950;
-            --brown-dark: #80603f;
-
-            --text: #5f5a4a;
-            --white: #fffdf5;
-
-            --shadow: 0 8px 25px rgba(82, 76, 52, 0.18);
-            --radius: 14px;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background:
-                linear-gradient(
-                    rgba(217, 210, 191, 0.88),
-                    rgba(217, 210, 191, 0.88)
-                ),
-                #d9d2bf;
-
-            color: var(--text);
-            font-family:
-                "Noto Sans TC",
-                "Microsoft JhengHei",
-                sans-serif;
-
-            line-height: 1.8;
-        }
-
-
-        /* ========================================
-           網頁外框
-        ======================================== */
-
-        .wrapper {
-            width: min(1100px, 94%);
-            margin: 30px auto;
-            background: var(--cream);
-            box-shadow: var(--shadow);
-            border-radius: var(--radius);
-            overflow: hidden;
-        }
-
-
-        /* ========================================
-           Header / Hero
-        ======================================== */
-
-        header {
-            position: relative;
-        }
-
-        .hero {
-            min-height: 300px;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            text-align: center;
-
-            padding: 60px 30px;
-
-            background:
-                linear-gradient(
-                    rgba(63, 77, 50, 0.72),
-                    rgba(83, 99, 66, 0.78)
-                ),
-                linear-gradient(
-                    135deg,
-                    #536342,
-                    #7b8b63
-                );
-
-            color: var(--white);
-
-            position: relative;
-        }
-
-        /* 裝飾圓形 */
-
-        .hero::before {
-            content: "";
-            position: absolute;
-
-            width: 180px;
-            height: 180px;
-
-            border-radius: 50%;
-
-            background: rgba(255, 255, 255, 0.08);
-
-            top: -60px;
-            left: -40px;
-        }
-
-        .hero::after {
-            content: "";
-            position: absolute;
-
-            width: 240px;
-            height: 240px;
-
-            border-radius: 50%;
-
-            background: rgba(255, 255, 255, 0.06);
-
-            bottom: -100px;
-            right: -60px;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: clamp(38px, 6vw, 64px);
-            letter-spacing: 6px;
-            margin-bottom: 12px;
-
-            text-shadow:
-                0 3px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .hero p {
-            font-size: clamp(16px, 2vw, 21px);
-            letter-spacing: 2px;
-            opacity: 0.95;
-        }
-
-
-        /* ========================================
-           導覽列
-        ======================================== */
-
-        nav {
-            background: var(--beige);
-
-            padding: 14px 20px;
-
-            display: flex;
-            justify-content: center;
-        }
-
-        nav ul {
-            list-style: none;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            flex-wrap: wrap;
-
-            gap: 10px;
-        }
-
-        nav a {
-            display: block;
-
-            padding: 10px 24px;
-
-            color: var(--forest-dark);
-            background: transparent;
-
-            text-decoration: none;
-
-            font-size: 17px;
-            font-weight: bold;
-
-            border-radius: 30px;
-
-            transition:
-                background-color 0.3s ease,
-                color 0.3s ease,
-                transform 0.3s ease,
-                box-shadow 0.3s ease;
-        }
-
-        nav a:hover,
-        nav a.active {
-            background: var(--sage);
-            color: var(--white);
-
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 4px 10px rgba(80, 65, 40, 0.18);
-        }
-
-
-        /* ========================================
-           主要內容
-        ======================================== */
-
-        main {
-            padding: 70px 60px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            color: var(--forest);
-
-            font-size: clamp(28px, 4vw, 40px);
-
-            margin-bottom: 10px;
-        }
-
-        .section-title p {
-            color: #817b69;
-            font-size: 17px;
-        }
-
-        .leaf {
-            display: inline-block;
-            margin: 0 8px;
-        }
-
-
-        /* ========================================
-           文章卡片
-        ======================================== */
-
-        .cards {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 25px;
-
-            margin-bottom: 50px;
-        }
-
-        .card {
-            background: #fffdf7;
-
-            padding: 30px 25px;
-
-            border-radius: var(--radius);
-
-            border:
-                1px solid rgba(123, 139, 99, 0.18);
-
-            box-shadow:
-                0 5px 18px rgba(82, 76, 52, 0.08);
-
-            transition:
-                transform 0.3s ease,
-                box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-7px);
-
-            box-shadow:
-                0 12px 25px rgba(82, 76, 52, 0.15);
-        }
-
-        .card-icon {
-            width: 55px;
-            height: 55px;
-
-            margin: 0 auto 20px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background: var(--beige);
-
-            border-radius: 50%;
-
-            font-size: 26px;
-        }
-
-        .card h3 {
-            text-align: center;
-
-            color: var(--forest);
-
-            font-size: 22px;
-
-            margin-bottom: 15px;
-        }
-
-        .card p {
-            color: var(--text);
-
-            font-size: 16px;
-
-            text-align: justify;
-        }
-
-
-        /* ========================================
-           介紹區
-        ======================================== */
-
-        .intro {
-            max-width: 850px;
-
-            margin: 0 auto 45px;
-
-            text-align: center;
-        }
-
-        .intro p {
-            font-size: 18px;
-            color: var(--text);
-
-            margin-bottom: 22px;
-        }
-
-
-        /* ========================================
-           按鈕
-        ======================================== */
-
-        .btn {
-            display: inline-block;
-
-            padding: 13px 35px;
-
-            background: var(--sage);
-
-            color: var(--white);
-
-            text-decoration: none;
-
-            font-size: 17px;
-            font-weight: bold;
-
-            border-radius: 30px;
-
-            box-shadow:
-                0 5px 12px rgba(80, 65, 40, 0.15);
-
-            transition:
-                background-color 0.3s ease,
-                transform 0.3s ease,
-                box-shadow 0.3s ease;
-        }
-
-        .btn:hover {
-            background: var(--brown);
-
-            transform: translateY(-3px);
-
-            box-shadow:
-                0 8px 18px rgba(80, 65, 40, 0.22);
-        }
-
-
-        /* ========================================
-           Footer
-        ======================================== */
-
-        footer {
-            background: var(--forest);
-
-            color: var(--cream);
-
-            text-align: center;
-
-            padding: 30px 20px;
-        }
-
-        footer .footer-title {
-            font-size: 22px;
-
-            font-weight: bold;
-
-            margin-bottom: 8px;
-        }
-
-        footer p {
-            font-size: 14px;
-
-            opacity: 0.85;
-        }
-
-
-        /* ========================================
-           平板
-        ======================================== */
-
-        @media (max-width: 850px) {
-
-            main {
-                padding: 55px 35px;
-            }
-
-            .cards {
-                grid-template-columns: 1fr;
-            }
-
-            .card {
-                max-width: 600px;
-                width: 100%;
-                margin: auto;
-            }
-        }
-
-
-        /* ========================================
-           手機
-        ======================================== */
-
-        @media (max-width: 600px) {
-
-            .wrapper {
-                width: 100%;
-                margin: 0;
-
-                border-radius: 0;
-            }
-
-            .hero {
-                min-height: 250px;
-
-                padding: 50px 20px;
-            }
-
-            .hero h1 {
-                letter-spacing: 3px;
-            }
-
-            nav {
-                padding: 10px;
-            }
-
-            nav ul {
-                width: 100%;
-
-                display: grid;
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
-                gap: 6px;
-            }
-
-            nav a {
-                text-align: center;
-
-                padding: 9px 5px;
-
-                font-size: 15px;
-            }
-
-            main {
-                padding: 45px 20px;
-            }
-
-            .section-title {
-                margin-bottom: 35px;
-            }
-
-            .section-title h2 {
-                font-size: 30px;
-            }
-
-            .intro p {
-                font-size: 16px;
-
-                text-align: left;
-            }
-
-            .card {
-                padding: 25px 20px;
-            }
-
-            footer {
-                padding: 25px 15px;
-            }
-        }
-    </style>
 </head>
 
-
 <body>
-
     <div class="wrapper">
-
-        <!-- =========================
-             頁首
-        ========================== -->
-
         <header>
-
             <div class="hero">
-
                 <div class="hero-content">
-
                     <h1>我的荒野花園</h1>
-
-                    <p>
-                        答案就在自然裡
-                    </p>
-
+                    <p>答案就在自然裡</p>
                 </div>
-
             </div>
-
-
-            <!-- 導覽列 -->
 
             <nav>
-
                 <ul>
-
-                    <li>
-                        <a href="#" class="active">
-                            首頁
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#articles">
-                            最新消息
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#garden">
-                            花園生活
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#about">
-                            關於我們
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#contact">
-                            聯絡我們
-                        </a>
-                    </li>
-
+                    <li><a href="#" class="active">首頁</a></li>
+                    <li><a href="#articles">最新消息</a></li>
+                    <li><a href="#garden">花園生活</a></li>
+                    <li><a href="#about">關於我們</a></li>
+                    <li><a href="#contact">聯絡我們</a></li>
                 </ul>
-
             </nav>
-
         </header>
 
-
-        <!-- =========================
-             主要內容
-        ========================== -->
-
         <main>
-
             <section id="about">
-
                 <div class="section-title">
-
-                    <h2>
-                        <span class="leaf">🌿</span>
-                        歡迎來到我的花園
-                        <span class="leaf">🌿</span>
-                    </h2>
-
-                    <p>
-                        讓生活慢一點，讓自然靠近一點
-                    </p>
-
+                    <h2><span class="leaf">🌿</span>歡迎來到我的花園<span class="leaf">🌿</span></h2>
+                    <p>讓生活慢一點，讓自然靠近一點</p>
                 </div>
-
 
                 <div class="intro">
-
-                    <p>
-                        每一座花園，都藏著一段與自然相遇的故事。
-                        在繁忙的生活裡，我們總需要一個可以放慢腳步的地方。
-                    </p>
-
-                    <p>
-                        這裡沒有喧鬧的城市，也沒有急促的腳步，
-                        只有風吹過葉子的聲音、陽光灑落的溫度，
-                        以及一點屬於自己的寧靜。
-                    </p>
-
+                    <p>每一座花園，都藏著一段與自然相遇的故事。在繁忙的生活裡，我們總需要一個可以放慢腳步的地方。</p>
+                    <p>這裡沒有喧鬧的城市，也沒有急促的腳步，只有風吹過葉子的聲音、陽光灑落的溫度，以及一點屬於自己的寧靜。</p>
                 </div>
-
             </section>
-
-
-            <!-- =========================
-                 三個內容卡片
-            ========================== -->
 
             <section id="articles">
-
                 <div class="cards">
-
-
                     <article class="card">
-
-                        <div class="card-icon">
-                            🌱
-                        </div>
-
-                        <h3>
-                            自然生活
-                        </h3>
-
-                        <p>
-                            從一盆植物、一片葉子開始，
-                            重新感受自然的美好。
-                            讓綠意走進生活，也讓生活多一點呼吸的空間。
-                        </p>
-
+                        <div class="card-icon">🌱</div>
+                        <h3>自然生活</h3>
+                        <p>從一盆植物、一片葉子開始，重新感受自然的美好。讓綠意走進生活，也讓生活多一點呼吸的空間。</p>
                     </article>
 
-
                     <article class="card">
-
-                        <div class="card-icon">
-                            🌸
-                        </div>
-
-                        <h3>
-                            花園日記
-                        </h3>
-
-                        <p>
-                            記錄四季花草的變化，
-                            分享種植、照顧植物以及與自然相處的小故事。
-                        </p>
-
+                        <div class="card-icon">🌸</div>
+                        <h3>花園日記</h3>
+                        <p>記錄四季花草的變化，分享種植、照顧植物以及與自然相處的小故事。</p>
                     </article>
 
-
                     <article class="card">
-
-                        <div class="card-icon">
-                            🍃
-                        </div>
-
-                        <h3>
-                            慢活時光
-                        </h3>
-
-                        <p>
-                            偶爾放下手機，走進陽光裡。
-                            聽聽風吹樹葉的聲音，
-                            給自己一段真正屬於自己的時間。
-                        </p>
-
+                        <div class="card-icon">🍃</div>
+                        <h3>慢活時光</h3>
+                        <p>偶爾放下手機，走進陽光裡。聽聽風吹樹葉的聲音，給自己一段真正屬於自己的時間。</p>
                     </article>
-
-
                 </div>
-
             </section>
-
-
-            <!-- =========================
-                 花園生活
-            ========================== -->
 
             <section id="garden">
-
                 <div class="section-title">
-
-                    <h2>
-                        🌾 探索我的荒野花園
-                    </h2>
-
-                    <p>
-                        一草一木，都是生活最自然的風景
-                    </p>
-
+                    <h2>🌾 探索我的荒野花園</h2>
+                    <p>一草一木，都是生活最自然的風景</p>
                 </div>
-
 
                 <div class="intro">
-
-                    <p>
-                        花園不一定要很大。
-                        一個陽台、一個窗台，
-                        甚至是一盆小小的植物，
-                        都可以成為我們與自然連結的開始。
-                    </p>
-
-                    <a href="#contact" class="btn">
-                        了解更多
-                    </a>
-
+                    <p>花園不一定要很大。一個陽台、一個窗台，甚至是一盆小小的植物，都可以成為我們與自然連結的開始。</p>
+                    <a href="#contact" class="btn">了解更多</a>
                 </div>
-
             </section>
-
         </main>
 
-
-        <!-- =========================
-             頁尾
-        ========================== -->
-
         <footer id="contact">
-
-            <div class="footer-title">
-                🌿 我的荒野花園
-            </div>
-
-            <p>
-                © 2026 我的荒野花園 ｜ Power by 跨平台班
-            </p>
-
+            <div class="footer-title">🌿 我的荒野花園</div>
+            <p>© 2026 我的荒野花園 ｜ Power by 跨平台班</p>
         </footer>
-
     </div>
 
+    <script src="script.js"></script>
 </body>
 
 </html>
